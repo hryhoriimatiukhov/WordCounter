@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Word Counter</string>
+    <string name="input_label">Text to Analyze</string>
+    <string name="input_placeholder">Enter or generate text here to analyze…</string>
+    <string name="error_empty_input">Please enter some text to analyze.</string>
+    
+    <!-- Action Buttons -->
+    <string name="btn_calculate">Calculate Metrics</string>
+    <string name="btn_generate_test_sentence">Generate Test Sentence</string>
+    <string name="btn_clear_history">Clear History</string>
+    
+    <!-- Metric Titles -->
+    <string name="section_results_title">Current Text Metrics</string>
+    <string name="metric_sentences">Sentences</string>
+    <string name="metric_words">Words</string>
+    <string name="metric_punctuation">Punctuation</string>
+    <string name="metric_numbers">Numbers</string>
+    
+    <!-- History Section -->
+    <string name="section_history_title">Session Calculation History</string>
+    <string name="history_empty_message">No calculations performed yet in this session.</string>
+    <string name="history_format_summary">%1$d sentences, %2$d words, %3$d punctuation marks, %4$d numbers</string>
+    
+    <!-- User Feedback Notifications -->
+    <string name="msg_history_cleared">Session history has been cleared.</string>
+    <string name="msg_calculation_success">Metrics calculated successfully.</string>
+    <string name="msg_sentence_generated">Sample test sentence generated.</string>
+</resources>
