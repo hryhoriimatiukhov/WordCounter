@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    jacoco
 }
 
 android {
@@ -21,6 +22,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            enableUnitTestCoverage = true
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -64,5 +68,45 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest")
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+
+    val fileFilter = listOf(
+        "**/R.class",
+        "**/R$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "android/**/*.*",
+        "**/MainActivity*.*",
+        "**/ComposableSingletons*.*",
+        "**/ui/theme/**",
+        "**/ui/components/**",
+        "**/ui/*Screen*.*",
+        "**/ui/ComposableSingletons*.*"
+    )
+
+    val debugTree = fileTree("${project.layout.buildDirectory.get()}/tmp/kotlin-classes/debug") {
+        exclude(fileFilter)
+    }
+    val mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files(mainSrc))
+    classDirectories.setFrom(files(debugTree))
+    executionData.setFrom(fileTree(project.layout.buildDirectory.get()) {
+        include("outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec")
+    })
 }
